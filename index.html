@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удостоверение Kaspi</title>
+    <style>
+        /* 🔥 ВСТРОЕННЫЙ CSS */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .id-card {
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .id-header {
+            background: #00a2e2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        .id-photo {
+            width: 120px;
+            height: 160px;
+            margin: 15px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .id-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .id-data {
+            padding: 0 20px 20px;
+        }
+        .id-data p {
+            margin: 10px 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .id-signature {
+            margin: 15px 0;
+            text-align: center;
+        }
+        .id-signature img {
+            height: 40px;
+        }
+        .id-footer {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+        .id-button {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 12px;
+            color: #00a2e2;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .id-button:hover {
+            background: #f0f8ff;
+        }
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .code-display {
+            font-family: monospace;
+            font-size: 18px;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="id-card">
+        <div class="id-header">
+            УДОСТОВЕРЕНИЕ ЛИЧНОСТИ
+        </div>
+        <div class="id-photo">
+            <img src="https://i.ibb.co/1J9yrRLK/face.jpg" alt="Фото">
+        </div>
+        <div class="id-data">
+            <p><strong>ФИО:</strong> Мирзоев Ибрагим Мирзаевич</p>
+            <p><strong>Дата рождения:</strong> 06.01.2013</p>
+            <p><strong>Номер удостоверения:</strong> AB638292</p>
+            <p><strong>Дата выдачи:</strong> 21.04.2025</p>
+            <div class="id-signature">
+                <img src="https://i.ibb.co/vxrX7nq9/signature.png" alt="Подпись">
+            </div>
+        </div>
+        <div class="id-footer">
+            <button class="id-button" onclick="confirmId()">ПОДТВЕРДИТЬ</button>
+            <button class="id-button" onclick="showId()">ПРЕДЪЯВИТЬ</button>
+        </div>
+    </div>
+
+    <div class="modal" id="codeModal">
+        <div class="modal-content">
+            <h3>Код подтверждения</h3>
+            <div class="code-display" id="confirmCode"></div>
+            <button class="id-button" onclick="copyCode()">Копировать</button>
+            <button class="id-button" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        // 🔥 ВСТРОЕННЫЙ JAVASCRIPT
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            // Генерация кода формата XX-XXXX-XX
+            for (let i = 0; i < 2; i++) code += chars[Math.floor(Math.random() * 26)];
+            code += '-';
+            for (let i = 0; i < 4; i++) code += chars[26 + Math.floor(Math.random() * 10)];
+            code += '-';
+            for (let i = 0; i < 2; i++) code += chars[Math.floor(Math.random() * 26)];
+            return code;
+        }
+
+        function confirmId() {
+            const code = generateRandomCode();
+            document.getElementById("confirmCode").textContent = code;
+            document.getElementById("codeModal").style.display = "flex";
+        }
+
+        function showId() {
+            alert("Код для предъявления: GGF-VSJZJSVDVXJSBSVZKOSVSCDHEF");
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText(document.getElementById("confirmCode").textContent)
+                .then(() => alert("Код скопирован!"));
+        }
+
+        function closeModal() {
+            document.getElementById("codeModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
